@@ -8,6 +8,8 @@ local function inspect(kind, ...)
 end
 
 
+inspect("package")
+
 inspect("loadfile", "scripts/global.lua")
 inspect("loadfile", "scripts/local.lua")
 inspect("loadfile", "scripts/module.lua")
