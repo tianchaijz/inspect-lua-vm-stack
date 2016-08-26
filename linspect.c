@@ -3,6 +3,7 @@
 static int inspect_package(lua_State *L) {
   lua_getglobal(L, "package");
   showValue(L, -1);
+  lua_pop(L, 1);
 
   return 0;
 }
@@ -10,6 +11,7 @@ static int inspect_package(lua_State *L) {
 static int inspect_global(lua_State *L) {
   lua_pushvalue(L, LUA_GLOBALSINDEX);
   showValue(L, -1);
+  lua_pop(L, 1);
 
   return 0;
 }
@@ -17,6 +19,7 @@ static int inspect_global(lua_State *L) {
 static int inspect_registry(lua_State *L) {
   lua_pushvalue(L, LUA_REGISTRYINDEX);
   showValue(L, -1);
+  lua_pop(L, 1);
 
   return 0;
 }
