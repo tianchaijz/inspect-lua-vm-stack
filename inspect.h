@@ -8,22 +8,33 @@
 #define LUA_INSPECT_NAME "inspect"
 #define LUA_INSPECT_PATH "/tmp/inspect.lua"
 
-#define log(format, ...) fprintf(stdout, format "\n", ##__VA_ARGS__)
+#ifdef LOG_FILE
+#define inspectLog(fmt, ...)                                                   \
+  do {                                                                         \
+    FILE *fp;                                                                  \
+    fp = fopen(LOG_FILE, "a");                                                 \
+    fprintf(fp, fmt "\n", ##__VA_ARGS__);                                      \
+    fclose(fp);                                                                \
+  } while (0)
+#else
+#define inspectLog(fmt, ...) fprintf(stdout, fmt "\n", ##__VA_ARGS__)
+#endif
+
 #define absIndex(L, i)                                                         \
   ((i) > 0 || (i) <= LUA_REGISTRYINDEX ? (i) : lua_gettop(L) + (i) + 1)
 #define showError(L, fmt, ...)                                                 \
   do {                                                                         \
-    log(fmt, ##__VA_ARGS__);                                                   \
+    inspectLog(fmt, ##__VA_ARGS__);                                            \
     luaL_error(L, fmt, ##__VA_ARGS__);                                         \
   } while (0)
 #define showValue(L, i)                                                        \
   do {                                                                         \
-    log("%d: %s", (i), runInspect(L, (i)));                                    \
+    inspectLog("%d: %s", (i), runInspect(L, (i)));                             \
     lua_pop(L, 1);                                                             \
   } while (0)
 #define stackDump(L)                                                           \
   do {                                                                         \
-    log("[stack dump at %s +%d]", __FILE__, __LINE__);                         \
+    inspectLog("[stack dump at %s +%d]", __FILE__, __LINE__);                  \
     int i = lua_gettop(L);                                                     \
     for (; i; --i) {                                                           \
       showValue(L, i);                                                         \
