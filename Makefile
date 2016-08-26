@@ -17,10 +17,10 @@ SOCFLAGS= -fPIC $(CCOPT) $(CCWARN) $(DEFINES) $(INCLUDES) $(CFLAGS)
 
 all: $(BIN) $(SO)
 
-$(BIN): inspect.c
+$(BIN): inspect.c inspect.h
 	cc $(CCOPT) $(INCLUDES) $(LINKS) -o $@ $<
 
-linspect.o: linspect.c
+linspect.o: linspect.c inspect.h
 	$(CC) $(SOCFLAGS) -c -o $@ $<
 
 $(SO): linspect.o
