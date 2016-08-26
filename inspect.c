@@ -14,6 +14,9 @@ int main(int ac, char *av[]) {
                printTable);               /* register "printTable" function */
   luaL_loadfile(L, "scripts/script.lua"); /* load script.lua */
   lua_pcall(L, 0, LUA_MULTRET, 0);        /* execute script */
+  if (lua_isstring(L, -1)) {
+    inspectLog("%s", lua_tostring(L, -1));
+  }
 
   lua_close(L);
   return 0;

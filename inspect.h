@@ -11,8 +11,7 @@
 #ifdef LOG_FILE
 #define inspectLog(fmt, ...)                                                   \
   do {                                                                         \
-    FILE *fp;                                                                  \
-    fp = fopen(LOG_FILE, "a");                                                 \
+    FILE *fp = fopen(LOG_FILE, "a");                                           \
     fprintf(fp, fmt "\n", ##__VA_ARGS__);                                      \
     fclose(fp);                                                                \
   } while (0)
@@ -55,7 +54,13 @@ static void loadInspect(lua_State *L) {
     return; /* already loaded */
 
   lua_pop(L, 1);
-  luaL_openlibs(L);
+
+  lua_getglobal(L, "string");
+  if (lua_isnil(L, -1)) {
+    luaL_openlibs(L); /* opens the standard libraries */
+  }
+
+  lua_pop(L, 1);
 
   if (luaL_loadfile(L, LUA_INSPECT_PATH) != 0)
     loadError(L, LUA_INSPECT_PATH);
