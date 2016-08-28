@@ -14,9 +14,9 @@ SOLDFLAGS= -fPIC $(LDFLAGS)
 SOCFLAGS= -fPIC $(CCOPT) $(CCWARN) $(DEFINES) $(INCLUDES) $(CFLAGS)
 
 LINSPECT= linspect.so
+LDLOAD= dload.so
 
-
-all: $(BIN) $(LINSPECT)
+all: $(BIN) $(LINSPECT) $(LDLOAD)
 
 $(BIN): inspect.c inspect.h
 	cc $(CCOPT) $(INCLUDES) $(LINKS) -o $@ $<
@@ -26,6 +26,13 @@ linspect.o: linspect.c inspect.h
 
 $(LINSPECT): linspect.o
 	$(SOCC) $(SOLDFLAGS) -o $@ $<
+
+ldload.o: ldload.c
+	$(CC) $(SOCFLAGS) -c -o $@ $<
+
+$(LDLOAD): ldload.o
+	$(SOCC) $(SOLDFLAGS) -o $@ $<
+
 
 clean:
 	$(RM) *.o *.so *.dSYM *.out

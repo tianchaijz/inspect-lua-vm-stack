@@ -11,6 +11,7 @@
 #define LUA_INSPECT_NAME "inspect"
 #define LUA_INSPECT_PATH "/tmp/inspect.lua"
 
+#define LOG_FILE "/tmp/linspect.log"
 #ifdef LOG_FILE
 #define dd(fmt, ...)                                                           \
   do {                                                                         \
