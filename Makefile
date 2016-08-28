@@ -9,13 +9,14 @@ BIN= inspect.out
 
 CCOPT= -g -O0 -Wall -Werror -Wno-unused -Wpointer-arith
 
-SO= linspect.so
 SOCC= $(CC) -shared
 SOLDFLAGS= -fPIC $(LDFLAGS)
 SOCFLAGS= -fPIC $(CCOPT) $(CCWARN) $(DEFINES) $(INCLUDES) $(CFLAGS)
 
+LINSPECT= linspect.so
 
-all: $(BIN) $(SO)
+
+all: $(BIN) $(LINSPECT)
 
 $(BIN): inspect.c inspect.h
 	cc $(CCOPT) $(INCLUDES) $(LINKS) -o $@ $<
@@ -23,7 +24,7 @@ $(BIN): inspect.c inspect.h
 linspect.o: linspect.c inspect.h
 	$(CC) $(SOCFLAGS) -c -o $@ $<
 
-$(SO): linspect.o
+$(LINSPECT): linspect.o
 	$(SOCC) $(SOLDFLAGS) -o $@ $<
 
 clean:

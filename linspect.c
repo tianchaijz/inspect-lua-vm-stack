@@ -30,7 +30,7 @@ static int inspect_loadfile(lua_State *L) {
   luaL_loadfile(L, file);
 
   stackDump(L);
-  /* lua "require" set the return value true when the value is nil */
+  /* lua "require" set the return value to true when the value is nil */
   lua_call(L, 0, LUA_MULTRET); /* execute script */
   stackDump(L);
 

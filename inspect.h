@@ -1,3 +1,6 @@
+#ifndef _INSPECT_H_INCLUDED_
+#define _INSPECT_H_INCLUDED_
+
 #include <stdio.h>
 
 #include <lauxlib.h>
@@ -9,31 +12,31 @@
 #define LUA_INSPECT_PATH "/tmp/inspect.lua"
 
 #ifdef LOG_FILE
-#define inspectLog(fmt, ...)                                                   \
+#define dd(fmt, ...)                                                           \
   do {                                                                         \
     FILE *fp = fopen(LOG_FILE, "a");                                           \
     fprintf(fp, fmt "\n", ##__VA_ARGS__);                                      \
     fclose(fp);                                                                \
   } while (0)
 #else
-#define inspectLog(fmt, ...) fprintf(stdout, fmt "\n", ##__VA_ARGS__)
+#define dd(fmt, ...) fprintf(stdout, fmt "\n", ##__VA_ARGS__)
 #endif
 
 #define absIndex(L, i)                                                         \
   ((i) > 0 || (i) <= LUA_REGISTRYINDEX ? (i) : lua_gettop(L) + (i) + 1)
 #define showError(L, fmt, ...)                                                 \
   do {                                                                         \
-    inspectLog(fmt, ##__VA_ARGS__);                                            \
+    dd(fmt, ##__VA_ARGS__);                                                    \
     luaL_error(L, fmt, ##__VA_ARGS__);                                         \
   } while (0)
 #define showValue(L, i)                                                        \
   do {                                                                         \
-    inspectLog("%d: %s", (i), runInspect(L, (i)));                             \
+    dd("%d: %s", (i), runInspect(L, (i)));                                     \
     lua_pop(L, 1);                                                             \
   } while (0)
 #define stackDump(L)                                                           \
   do {                                                                         \
-    inspectLog("[stack dump at %s +%d]", __FILE__, __LINE__);                  \
+    dd("[stack dump at %s +%d]", __FILE__, __LINE__);                          \
     int i = lua_gettop(L);                                                     \
     for (; i; --i) {                                                           \
       showValue(L, i);                                                         \
@@ -84,5 +87,7 @@ static const char *runInspect(lua_State *L, int idx) {
 
   return lua_tostring(L, -1);
 }
+
+#endif
 
 /* vi:set ft=c ts=2 sw=2 et fdm=marker: */
