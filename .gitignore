@@ -1,5 +1,13 @@
-*.out
-*.swp
 *.o
 *.so
 *.dSYM
+*.swp
+
+bin
+lib
+
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+Makefile
