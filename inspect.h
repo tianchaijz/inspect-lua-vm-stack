@@ -9,7 +9,7 @@
 #include <lualib.h>
 
 #define LUA_INSPECT_NAME "inspect"
-#define LUA_INSPECT_PATH "/tmp/inspect.lua"
+#define LUA_INSPECT_PATH "scripts/inspect.lua"
 
 #ifdef LOG_FILE
 #define dd(fmt, ...)                                                           \
