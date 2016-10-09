@@ -14,7 +14,12 @@ int main(int ac, char *av[]) {
   lua_register(L, "print_table", print_table);
 
   luaL_loadfile(L, "scripts/script.lua"); /* load script.lua */
-  lua_pcall(L, 0, LUA_MULTRET, 0);        /* execute script */
+  if (lua_isstring(L, -1)) {
+    dd("%s", lua_tostring(L, -1));
+    return 1;
+  }
+
+  lua_pcall(L, 0, LUA_MULTRET, 0); /* execute script */
 
   if (lua_isstring(L, -1)) {
     dd("%s", lua_tostring(L, -1));
