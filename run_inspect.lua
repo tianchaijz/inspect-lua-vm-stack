@@ -1,7 +1,10 @@
 package.cpath = package.cpath .. ";lib/?.so;lib/?.dylib;;"
 
 local linspect = require "linspect"
-local trim_required = require "trim"
+local trim_required = require "ltrim"
+
+
+print("a" .. trim(" b  ") .. "c")
 
 
 local function inspect(kind, ...)

@@ -51,6 +51,8 @@ include_directories(
     ${LUA_INCLUDE_DIR}
     )
 
+
+# lua linspect module
 set(LINSPECT_SRCS
     linspect.c
     )
@@ -62,6 +64,21 @@ if(LINK_FLAGS)
         LINK_FLAGS ${LINK_FLAGS}
         )
 endif()
+
+
+# lua ltrim module
+set(LINSPECT_SRCS
+    ltrim.c
+    )
+
+add_library(ltrim SHARED ${LINSPECT_SRCS})
+set_target_properties(ltrim PROPERTIES PREFIX "")
+if(LINK_FLAGS)
+    set_target_properties(ltrim PROPERTIES
+        LINK_FLAGS ${LINK_FLAGS}
+        )
+endif()
+
 
 add_executable(inspect_demo inspect_demo.c)
 target_link_libraries(inspect_demo ${LUA})
