@@ -82,3 +82,6 @@ endif()
 
 add_executable(inspect_demo inspect_demo.c)
 target_link_libraries(inspect_demo ${LUA})
+
+
+add_executable(bin2c util/bin2c.c)
