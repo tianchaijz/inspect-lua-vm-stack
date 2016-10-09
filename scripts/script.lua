@@ -6,6 +6,6 @@ tb.ta = ta
 
 local tc = {'a', [ta]='circle', x=1, 'b', {{'one', 'two'}, 'aa', 'bb', 'cc'}, 'd'}
 
-printTable(ta)
-printTable(tb)
-printTable(tc)
+print_table(ta)
+print_table(tb)
+print_table(tc)
